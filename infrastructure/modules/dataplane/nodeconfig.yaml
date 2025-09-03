@@ -1,0 +1,12 @@
+---
+apiVersion: node.eks.aws/v1alpha1
+kind: NodeConfig
+spec:
+  cluster:
+    name: ${ClusterName}
+    apiServerEndpoint: ${ClusterEndpoint}
+    certificateAuthority: ${ClusterCA}
+    cidr: ${cidr}
+  kubelet:
+    flags:
+      - --node-labels=eks.amazonaws.com/nodegroup-image=${AmiId},eks.amazonaws.com/nodegroup=${GroupName}
