@@ -6,12 +6,12 @@ spec:
   template:
     spec:
       requirements:
-        - key: karpenter.k8s.aws/instance-category
+        - key: kubernetes.io/arch
           operator: In
-          values: ["c", "m", "r"]
-        - key: karpenter.k8s.aws/instance-size
+          values: ["arm64"]
+        - key: node.kubernetes.io/instance-type
           operator: In
-          values: ["nano", "micro", "small", "medium"]
+          values: ["m6g.small", "m6g.medium", "m6g.large", "m6g.xlarge"]
         - key: karpenter.sh/capacity-type
           operator: In
           values: ["spot"]   
@@ -32,15 +32,16 @@ metadata:
   name: default
 spec:
   amiFamily: AL2023
-  role: "arn:aws:iam::<your_account_id>:role/eks_role_node_group" # replace with your cluster name
+  role: "arn:aws:iam::<your account id>:role/eks_role_node_group" # replace with your cluster name
   amiSelectorTerms:
-    - id: ami-0167400244e67b63b #must be AL2023 
+    - id: ami-0c52ae0e8893873d7 #must be AL2023 arm64
   subnetSelectorTerms:
     - tags:
         karpenter.sh/discovery: "dev-cluster" # replace with your cluster name
   securityGroupSelectorTerms:
-    - id: sg-03ad761dfcf210826 #replace your security group
-    - id: sg-00f668de48d188177 #replace your security group
+    - id: sg-0dca8e83c2f54c948 #replace your security group
+    - id: sg-0f0875d9a9e986848 #replace your security group
+#need off swap linux for kubelet work stable
   userData: |
     #!/bin/bash
     sudo swapoff -a

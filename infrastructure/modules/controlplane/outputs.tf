@@ -13,4 +13,3 @@ output "eks_cluster_endpoint" {
 output "eks_cluster_ca" {
     value = aws_eks_cluster.global_cluster.certificate_authority[0].data
 }
-

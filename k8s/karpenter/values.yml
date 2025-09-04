@@ -1,0 +1,23 @@
+serviceAccount:
+  create: true
+  name: "karpenter-controller-sa"
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::<your account id>:role/karpenter_controller_role"
+
+replicas: 1
+dnsPolicy: Default
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: karpenter.sh/nodepool
+              operator: DoesNotExist
+            - key: eks.amazonaws.com/nodegroup
+              operator: In
+              values:
+                - eks_asg_launch_template_ondemand
+settings:
+  clusterName: "dev-cluster"
+  clusterEndpoint: "https://3F3FF4F32FB17A43691ACDF4B4FF19AA.gr7.ap-southeast-1.eks.amazonaws.com"
+  interruptionQueue: "dev-cluster" 

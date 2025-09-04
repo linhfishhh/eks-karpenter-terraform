@@ -13,7 +13,7 @@ module "vpc" {
 }
 
 module "controlplane" {
-  source      = "../../modules/eks"
+  source      = "../../modules/controlplane"
   environment = var.environment
   eks = {
     name                   = var.eks.name
@@ -61,3 +61,10 @@ module "dataplane" {
   eks_cluster_ca       = module.controlplane.eks_cluster_ca
 }
 
+
+module "storage" {
+  source = "../../modules/storage"
+  environment = var.environment
+  eks_oidc_url =  module.controlplane.oidc_url
+  eks_oidc_arn = module.isra.aws_iam_oidc_arn
+}

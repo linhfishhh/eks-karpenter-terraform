@@ -5,3 +5,7 @@ output "vpc_cni_role_arn" {
 output "karpenter_controller_role_arn" {
   value = aws_iam_role.karpenter_controller_role.arn
 }
+
+output "aws_iam_oidc_arn" {
+  value = aws_iam_openid_connect_provider.iam_oidc_provider_global.arn
+}
