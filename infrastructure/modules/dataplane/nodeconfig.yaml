@@ -6,7 +6,7 @@ spec:
     name: ${ClusterName}
     apiServerEndpoint: ${ClusterEndpoint}
     certificateAuthority: ${ClusterCA}
-    cidr: ${cidr}
+    cidr: 10.100.0.0/16
   kubelet:
     flags:
       - --node-labels=eks.amazonaws.com/nodegroup-image=${AmiId},eks.amazonaws.com/nodegroup=${GroupName}

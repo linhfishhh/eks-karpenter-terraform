@@ -44,6 +44,12 @@ spec:
 #need off swap linux for kubelet work stable
   userData: |
     #!/bin/bash
+    set -e
     sudo swapoff -a
+    sed -i.bak '/\sswap\s/d' /etc/fstab
+    if [ -f /swapfile ]; then
+      echo "[INFO] deleting swapfile"
+      sudo rm -f /swapfile
+    fi
 
     

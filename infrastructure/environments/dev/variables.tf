@@ -29,3 +29,7 @@ variable "dataplane" {
   })
 
 }
+
+variable "repositories" {
+  type = list(string)
+}

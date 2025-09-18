@@ -25,7 +25,6 @@ resource "aws_launch_template" "eks_asg_launch_template_ondemand" {
       ClusterEndpoint = var.eks_cluster_endpoint
       ClusterCA       = var.eks_cluster_ca
       AmiId          = data.aws_ami.eks_worker_al2023.id
-      cidr            = var.dataplane.vpc_cidr
       GroupName      = "eks_asg_launch_template_ondemand"
     })
   }))

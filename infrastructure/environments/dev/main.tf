@@ -30,17 +30,18 @@ module "support" {
   source           = "../../modules/support"
   environment      = var.environment
   eks_clsuter_name = var.eks.name
+  repositories     = var.repositories
 
 }
 
 module "isra" {
-  source           = "../../modules/isra"
-  environment      = var.environment
-  eks_oidc_url     = module.controlplane.oidc_url
-  eks_clsuter_name = var.eks.name
-  region           = var.region
+  source                  = "../../modules/isra"
+  environment             = var.environment
+  eks_oidc_url            = module.controlplane.oidc_url
+  eks_clsuter_name        = var.eks.name
+  region                  = var.region
   karpenter_node_role_arn = module.iam.node_group_role_arn
-  karpenter_queue_arn = module.support.karpenter_interruption_queue_arn
+  karpenter_queue_arn     = module.support.karpenter_interruption_queue_arn
 
 }
 
@@ -54,7 +55,6 @@ module "dataplane" {
     private_subnet_ids   = module.vpc.private_subnet_ids
     sg_ids               = [module.controlplane.cluster_sg_id, module.vpc.global_sg_id]
     private_subnet_zones = var.vpc.availability_zones
-    vpc_cidr             = var.vpc.vpc_cidr
   }
 
   eks_cluster_endpoint = module.controlplane.eks_cluster_endpoint
@@ -63,8 +63,8 @@ module "dataplane" {
 
 
 module "storage" {
-  source = "../../modules/storage"
-  environment = var.environment
-  eks_oidc_url =  module.controlplane.oidc_url
+  source       = "../../modules/storage"
+  environment  = var.environment
+  eks_oidc_url = module.controlplane.oidc_url
   eks_oidc_arn = module.isra.aws_iam_oidc_arn
 }

@@ -6,7 +6,6 @@ variable "dataplane" {
       sg_ids = list(string)
       instance_type= string
       private_subnet_zones = list(string)
-      vpc_cidr = string
     })
 }
 
